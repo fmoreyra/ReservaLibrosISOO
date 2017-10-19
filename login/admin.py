@@ -13,7 +13,7 @@ class ProfileInline(admin.StackedInline):
 class CustomUserAdmin(UserAdmin):
     inlines = (ProfileInline, )
     list_display = ('get_legajo', 'username', 'email', 'get_nombre', 'get_apellido','get_documento', 'get_carrera', 'is_staff')
-
+    search_fields = ['profile__legajo', 'username', 'email', 'profile__nombre', 'profile__apellido','profile__documento', 'profile__carrera']
     def get_inline_instances(self, request, obj=None):
         if not obj:
             return list()
