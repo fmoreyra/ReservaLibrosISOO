@@ -71,4 +71,5 @@ target/
 avatars/
 
 #Migrations
-
+*login/migrations/
+*reserva/migrations/
