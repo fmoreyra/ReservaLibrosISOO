@@ -33,6 +33,7 @@ class SignUpForm(UserCreationForm):
         help_text='Obligatorio.',
         label='Carrera')
 
+
     class Meta:
         model = User
         fields = (

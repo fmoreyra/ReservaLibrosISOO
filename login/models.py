@@ -47,6 +47,20 @@ class Profile(models.Model):
         delta = (date.today() - self.fecha_nacimiento)
         return int(delta.days / 365.2425)
 
+    def __str__(self):
+        return "{0}, {1} {2}, {3}".format(
+            self.legajo,
+            self.nombre,
+            self.apellido,
+            self.carrera)
+
+    def save(self, *args,**kwargs):
+        self.validate_unique()
+        super(Profile,self).save(*args, **kwargs)
+
+    class Meta:
+        verbose_name = _("Perfil")
+        verbose_name_plural = _("Perfiles")
 
 
 @receiver(post_save, sender=User)

@@ -9,6 +9,10 @@ class Categoria(models.Model):
     def __str__(self):
         return self.nombre
 
+    class Meta:
+        verbose_name = _("Categoría")
+        verbose_name_plural = _("Categorías")
+
 
 class Nacionalidad(models.Model):
     nacionalidad = models.CharField(
@@ -17,6 +21,10 @@ class Nacionalidad(models.Model):
 
     def __str__(self):
         return self.nacionalidad
+
+    class Meta:
+        verbose_name = _("Nacionalidad")
+        verbose_name_plural = _("Nacionalidades")
 
 
 class Autor(models.Model):
@@ -38,6 +46,10 @@ class Autor(models.Model):
 
     def __str__(self):
         return self.nombre_completo
+
+    class Meta:
+        verbose_name = _("Autor")
+        verbose_name_plural = _("Autores")
 
 
 class Libro(models.Model):
@@ -62,7 +74,11 @@ class Libro(models.Model):
         default=True)
 
     def __str__(self):
-        return self.isbn
+        return self.isbn + ', ' + self.titulo + ', ' + str(self.edicion) + '° edición'
+
+    class Meta:
+        verbose_name = _("Libro")
+        verbose_name_plural = _("Libros")
 
 
 class Reserva(models.Model):
@@ -86,4 +102,8 @@ class Reserva(models.Model):
             return True
 
     def __str__(self):
-        return self.usuario.profile.legajo + ', ' + self.libro.titulo
+        return self.usuario.profile.__str__() + '; ' + self.libro.__str__()
+
+    class Meta:
+        verbose_name = _("Reserva")
+        verbose_name_plural = _("Reervas")

@@ -3,13 +3,37 @@
 <head>
   <meta charset="utf-8">
   <title>{% block title %}Django Simple Login{% endblock %}</title>
+  <style>
+.button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+
+.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+</style>
 </head>
 <body>
   <header>
     <h1>Django Simple Login</h1>
     {% if user.is_authenticated %}
       Hola, {{ user.username }}!
-      <a href="{% url 'logout' %}">logout</a>
+      {% if user.is_staff %}
+        <a href="{% url 'logout' %}">logout</a> / <a href="/admin">admin</a>
+      {% else %}
+        <a href="{% url 'logout' %}">logout</a>
+      {% endif %}
     {% else %}
       <a href="{% url 'login' %}">login</a> / <a href="{% url 'signup' %}">signup</a>
     {% endif %}
@@ -24,5 +48,7 @@
     <p>ISOO, UTN FRSFCO</p>
     <p>Joaquín Cabal, Facundo Moreyra</p>
   </footer>
+  <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+  {% block javascript %}{% endblock %}
 </body>
 </html>
