@@ -100,10 +100,10 @@
         validated=false;
       }
     }
-    if (validated){
-      document.getElementById('subscribirse').style.display = 'block';
+    if (!validated){
+      document.getElementById('save').disabled = 'true';
     } else {
-      document.getElementById('subscribirse').style.display = 'none';
+      document.getElementById('save').removeAttribute("disabled");
     }
     return validated;
   }
@@ -112,9 +112,36 @@
 
 {% block content %}
   <h2>Sign up</h2>
+  <!--
   <form method="post" class="viewform">
     {% csrf_token %}
     {{form.as_p}}
     <button id="subscribirse" type="submit" class="btn btn-primary btn-lg">Sign up</button>
+  </form>
+-->
+{% load widget_tweaks %}
+<form method="post">
+    {% csrf_token %}
+
+    {% for hidden in form.hidden_fields %}
+      {{ hidden }}
+    {% endfor %}
+
+    {% for field in form.visible_fields %}
+      <div class="form-group">
+        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+        {{ field|add_class:'form-control' }}
+        {% for error in field.errors %}
+          <span class="help-block">{{ error }}</span>
+        {% endfor %}
+      </div>
+    {% endfor %}
+
+    <div class="form-group">
+      <button type="submit" class="btn btn-success" id="save">
+        <span class="glyphicon glyphicon-ok"></span> Save
+      </button>
+      <a href="{% url 'home' %}" class="btn btn-default">Cancel</a>
+    </div>
   </form>
 {% endblock %}
