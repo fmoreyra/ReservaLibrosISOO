@@ -1,39 +1,70 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="utf-8">
   <title>{% block title %}Django Simple Login{% endblock %}</title>
   <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <style>
+    .bg-4 {
+      position: fixed;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      padding: 1rem;
+      background-color: #efefef;
+      text-align: center;
+    }
+  </style>
 </head>
+
 <body>
-  <header>
-    <h1>Django Simple Login</h1>
-    {% if user.is_authenticated %}
-      Hola, {{ user.username }}!
-      {% if user.is_staff %}
-        <a href="{% url 'logout' %}">logout</a> / <a href="/admin">admin</a>
-      {% else %}
-        <a href="{% url 'logout' %}">logout</a>
-      {% endif %}
-    {% else %}
-      <a href="{% url 'login' %}">login</a> / <a href="{% url 'signup' %}">signup</a>
-    {% endif %}
-  </header>
-  <hr>
-  <main>
+
+    <header>
+      <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="/">Sistema de Reserva de Libros - UTN FRSFCO</a>
+          </div>
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="/">Página Principal</a></li>
+          </ul>
+          {% if user.is_authenticated %} {% if user.is_staff %}
+          <ul class="nav navbar-nav navbar-right">
+            <li>Hola, {{ user.username }}</li>
+            <li><a href="/admin"><span class="glyphicon glyphicon-tasks"></span> Admin</a></li>
+            <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+          </ul>
+          {% else %}
+          <ul class="nav navbar-nav navbar-right">
+            <li>Hola, {{ user.username }}</li>
+            <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+          </ul>
+          <a href="{% url 'logout' %}">logout</a> {% endif %} {% else %}
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="{% url 'signup' %}"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+            <li><a href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+          </ul>
+          {% endif %}
+        </div>
+      </nav>
+    </header>
     <div class="container">
-    {% block content %}
-    {% endblock %}
-    </div>
-  </main>
-  <hr>
-  <footer>
-    <p>ISOO, UTN FRSFCO</p>
-    <p>Joaquín Cabal, Facundo Moreyra</p>
-  </footer>
+    <hr>
+    <main>
+      <div class="container">
+        {% block content %} {% endblock %}
+      </div>
+    </main>
+    <hr>
+    <footer class="container-fluid bg-4 text-center">
+      <p>ISOO, UTN FRSFCO - Joaquín Cabal, Facundo Moreyra</p>
+    </footer>
+  </div>
   <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
   {% block javascript %}{% endblock %}
 </body>
+
 </html>
