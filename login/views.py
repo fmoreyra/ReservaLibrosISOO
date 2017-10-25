@@ -1,13 +1,14 @@
 from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect
 from login.forms import SignUpForm
+from django.contrib.auth.models import User
+from django.http import JsonResponse
+from login.models import Profile
 
 def signup(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
-            import pdb
-            pdb.set_trace()
             user = form.save()
             user.refresh_from_db()  # Ingresar lo contenido x el form a partir de esta línea
             user.profile.apellido = form.cleaned_data.get('apellido')
@@ -26,3 +27,31 @@ def signup(request):
     else:
         form = SignUpForm()
     return render(request, 'signup.html', {'form': form})
+
+def validate_username(request):
+    username = request.GET.get('username', None)
+    data = {
+        'is_taken': User.objects.filter(username__iexact=username).exists()
+    }
+    return JsonResponse(data)
+
+def validate_legajo(request):
+    legajo = request.GET.get('legajo', None)
+    data = {
+        'is_taken': Profile.objects.filter(legajo__iexact=legajo).exists()
+    }
+    return JsonResponse(data)
+
+def validate_documento(request):
+    documento = request.GET.get('documento', None)
+    data = {
+        'is_taken': Profile.objects.filter(documento__iexact=documento).exists()
+    }
+    return JsonResponse(data)
+
+def validate_email(request):
+    email = request.GET.get('email', None)
+    data = {
+        'is_taken': User.objects.filter(email__iexact=email).exists()
+    }
+    return JsonResponse(data)

@@ -10,4 +10,8 @@ urlpatterns = [
     url(r'^login/$', auth_views.login, {'template_name': 'login.html'}, name='login'),
     url(r'^logout/$', auth_views.logout, {'template_name': 'logged_out.html'}, name='logout'),
     url(r'^signup/$', login_views.signup, name='signup'),
+    url(r'^ajax/validate_username/$', login_views.validate_username, name='validate_username'),
+    url(r'^ajax/validate_legajo/$', login_views.validate_legajo, name='validate_legajo'),
+    url(r'^ajax/validate_documento/$', login_views.validate_documento, name='validate_documento'),
+    url(r'^ajax/validate_email/$', login_views.validate_email, name='validate_email'),
 ]
