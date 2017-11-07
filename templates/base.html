@@ -17,41 +17,43 @@
       background-color: #efefef;
       text-align: center;
     }
+    td,th{
+       text-align:center;
+    }
   </style>
 </head>
 
 <body>
 
-    <header>
-      <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-          <div class="navbar-header">
-            <a class="navbar-brand" href="/">Sistema de Reserva de Libros - UTN FRSFCO</a>
-          </div>
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="/">Página Principal</a></li>
-          </ul>
-          {% if user.is_authenticated %} {% if user.is_staff %}
-          <ul class="nav navbar-nav navbar-right">
-            <li>Hola, {{ user.username }}</li>
-            <li><a href="/admin"><span class="glyphicon glyphicon-tasks"></span> Admin</a></li>
-            <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
-          </ul>
-          {% else %}
-          <ul class="nav navbar-nav navbar-right">
-            <li>Hola, {{ user.username }}</li>
-            <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
-          </ul>
-          <a href="{% url 'logout' %}">logout</a> {% endif %} {% else %}
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="{% url 'signup' %}"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-            <li><a href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-          </ul>
-          {% endif %}
+  <header>
+    <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/">Sistema de Reserva de Libros - UTN FRSFCO</a>
         </div>
-      </nav>
-    </header>
-    <div class="container">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="/">Página Principal</a></li>
+        </ul>
+        {% if user.is_authenticated %} {% if user.is_staff %}
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="{% url 'home' %}">Hola, {{ user.username }}</a></li>
+          <li><a href="/admin"><span class="glyphicon glyphicon-tasks"></span> Admin</a></li>
+          <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+        </ul>
+        {% else %}
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="/">Hola, {{ user.username }}</a></li>
+          <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+        </ul> {% endif %} {% else %}
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="{% url 'signup' %}"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+          <li><a href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+        </ul>
+        {% endif %}
+      </div>
+    </nav>
+  </header>
+  <div class="container">
     <hr>
     <main>
       <div class="container">

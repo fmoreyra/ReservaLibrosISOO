@@ -70,7 +70,12 @@ class Libro(models.Model):
     categoria = models.ForeignKey(
         Categoria,
         verbose_name=_("Categoría"))
-    disponibildad = models.BooleanField(
+    resumen = models.TextField(
+        max_length=2000,
+        verbose_name=_("Resumen"),
+        null=True,
+        blank=True)
+    disponibilidad = models.BooleanField(
         default=True)
 
     def __str__(self):
