@@ -1,0 +1,7 @@
+Django==1.11.5
+django-filter==1.1.0
+django-localflavor==1.5.2
+django-widget-tweaks==1.4.1
+pkg-resources==0.0.0
+pytz==2017.2
+ -e git://github.com/darklow/django-suit.git@v2#egg=django-suit

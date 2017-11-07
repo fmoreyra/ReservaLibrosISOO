@@ -2,8 +2,11 @@ from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect
 from login.forms import SignUpForm
 from django.contrib.auth.models import User
+from .filters import ProfileFilter, LibroFilter
 from django.http import JsonResponse
 from login.models import Profile
+from reserva.models import Libro
+from django.views import generic
 
 def signup(request):
     if request.method == 'POST':
@@ -55,3 +58,16 @@ def validate_email(request):
         'is_taken': User.objects.filter(email__iexact=email).exists()
     }
     return JsonResponse(data)
+
+class ProfileDetailView(generic.DetailView):
+    model = Profile
+
+def profile_search(request):
+    profile_list = Profile.objects.all()
+    profile_filter = ProfileFilter(request.GET, queryset=profile_list)
+    return render(request, 'profile_list.html', {'filter': profile_filter})
+
+def libro_search(request):
+    libro_list = Libro.objects.all()
+    libro_filter = LibroFilter(request.GET, queryset=libro_list)
+    return render(request,  'libro_list.html', {'filter': libro_filter})

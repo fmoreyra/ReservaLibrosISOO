@@ -1,3 +1,6 @@
 from django.shortcuts import render
+from django.views import generic
+from reserva.models import Libro
 
-# Create your views here.
+class LibroDetailView(generic.DetailView):
+    model = Libro
