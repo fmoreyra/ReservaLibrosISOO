@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block javascript %}
+<script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+<script>
+  $(document).ready(function() {
+    $('.datepicker').datepicker({
+      changeMonth: true,
+      changeYear: true,
+      yearRange: "2017:2019",
+      dateFormat: "dd/mm/yy"
+
+    });
+  });
+</script>
+{% endblock %}
+
+{% block content %}
+  <h2>Nueva Reserva</h2>
+  <!--
+  <form method="post" class="viewform">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button id="subscribirse" type="submit" class="btn btn-primary btn-lg">Sign up</button>
+  </form>
+-->
+{% load widget_tweaks %}
+<form method="post">
+    {% csrf_token %}
+
+    {% for hidden in form.hidden_fields %}
+      {{ hidden }}
+    {% endfor %}
+
+    {% for field in form.visible_fields %}
+      <div class="form-group">
+        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+        {{ field|add_class:'form-control' }}
+
+      </div>
+    {% endfor %}
+    {% if form.non_field_errors %}
+      <div class="alert alert-danger">
+          <strong>{{ form.non_field_errors }}</strong>
+      </div>
+    {% endif %}
+
+    <div class="form-group">
+      <button type="submit" class="btn btn-success" id="save">
+        <span class="glyphicon glyphicon-ok"></span> Realizar Reserva
+      </button>
+      <a href="{% url 'home' %}" class="btn btn-default">Cancelar</a>
+    </div>
+  </form>
+{% endblock %}

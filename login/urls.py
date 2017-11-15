@@ -19,4 +19,5 @@ urlpatterns = [
     url(r'^profile/(?P<pk>\d+)$', login_views.ProfileDetailView.as_view(), name='profile_detail'),
     url(r'^libro/$', login_views.libro_search, name='libro_search'),
     url(r'^libro/(?P<pk>\d+)$', reserva_views.LibroDetailView.as_view(), name='libro_detail'),
+    url(r'^reserva/', reserva_views.CreateReserva, name='create_reserva'),
 ]
