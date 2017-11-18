@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% if user.is_staff %}
+  <h1>Título: {{ libro.titulo }}</h1>
+
+  <p><strong>Nombre de Usuario:</strong> {{ profile.user.username }}</p>
+  <p><strong>Nombre:</strong> {{ profile.nombre }} </p>
+  <p><strong>Apellido:</strong> {{ profile.apellido }}</p>
+  <p><strong>Legajo:</strong> {{ profile.legajo}}</p>
+  <p><strong>Carrera:</strong> {{ profile.carrera}} </p>
+  <p><strong>E-Mail:</strong> {{ profile.user.email }} </p>
+  {% else %}
+  <h2>No tiene los privilegios necesarios para visitar esta página</h2> {% endif %}
+{% endblock %}

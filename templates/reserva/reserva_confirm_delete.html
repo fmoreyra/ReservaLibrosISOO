@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Borrar Reserva</h1>
+
+<p>Estás seguro de eliminar esta reserva?: {{ reserva }}?</p>
+
+<form action="" method="POST">
+  {% csrf_token %}
+  <input type="submit" action="" value="Si, borrar." />
+</form>
+
+{% endblock %}

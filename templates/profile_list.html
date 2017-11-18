@@ -34,7 +34,7 @@
   <tbody>
     {% for profile in filter.qs %}
     <tr>
-      <td>{{ profile.user.username }}</td>
+      <td><a href="/profile/{{ profile.id }}">{{ profile.user.username }}</a></td>
       <td>{{ profile.nombre }}</td>
       <td>{{ profile.apellido }}</td>
       <td>{{ profile.legajo}}</td>

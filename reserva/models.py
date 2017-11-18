@@ -93,14 +93,13 @@ class Reserva(models.Model):
     libro = models.ForeignKey(
         Libro,
         verbose_name=_("Libro"))
-    fecha_encargo = models.DateField(
-        auto_now=True,)
+    fecha_encargo = models.DateField()
     fecha_devolucion = models.DateField(
         null=True,
         blank=True)
     devuelto = models.NullBooleanField(
         null=True,
-        blank=True)
+        default=False)
 
     def __str__(self):
         return self.usuario.profile.__str__() + '; ' + self.libro.__str__()
@@ -108,4 +107,3 @@ class Reserva(models.Model):
     class Meta:
         verbose_name = _("Reserva")
         verbose_name_plural = _("Reservas")
-        unique_together = (("usuario", "libro"),)

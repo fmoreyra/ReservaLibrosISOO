@@ -1,11 +1,45 @@
 {% extends 'base.html' %}
 
-{% block title %}Login{% endblock %}
+{% block title %}Inicio - Sistema de reserva de Libros - UTN FRSFCO{% endblock %}
 
 {% block content %}
 {% if user.is_staff %}
-  <h2>Home para superusuario</h2>
+<h1>Hola, Administrador!</h1>
+<br>
+<h3><a href="{% url 'admin_view' %}">Datos que pueden interesarte</a></h3>
+
 {% else %}
-  <h2>Home para usuario normal</h2>
 {% endif %}
+<br>
+<h2>Mis Libros reservados</h2>
+<table class="table table-bordered">
+   <thead>
+     <tr>
+       <th>Usuario</th>
+       <th>Libro</th>
+       <th>Fecha de Encargo</th>
+       <th>Fecha de Devolucion</th>
+       <th>Devuelto?</th>
+       <th>Cancelar Reserva</th>
+     </tr>
+   </thead>
+   <tbody>
+     {% for reserva in reservaQuery %}
+       <tr>
+         <td>{{ reserva.usuario.profile.nombre }} {{ reserva.usuario.profile.apellido }}</td>
+         <td>{{ reserva.libro.titulo }}</td>
+         <td>{{ reserva.fecha_encargo}}</td>
+         <td>{{ reserva.fecha_devolucion}}</td>
+         {% if reserva.devuelto != True %}
+         <td style="color:white; background-color:#ff0000;"><strong>No</strong></td>
+         <td><span class="glyphicon glyphicon-floppy-remove"> <a href="/reserva/{{ reserva.id }}/delete">Cancelar</a></td>
+         {% else %}
+         <td style="color:white;  background-color:#00b300;"><strong>Sí</strong></td>{% endif %}
+       </tr> {% empty %}
+          <tr>
+            <td colspan="5">No hay libros reservados</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
 {% endblock %}
