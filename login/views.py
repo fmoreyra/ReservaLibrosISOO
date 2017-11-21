@@ -22,7 +22,6 @@ def signup(request):
             user.profile.legajo = form.cleaned_data.get('legajo')
             user.email = form.cleaned_data.get('email')
             raw_password = form.cleaned_data.get('password1')
-
             user.save()
             user = authenticate(username=user.username, password=raw_password)
             login(request, user)

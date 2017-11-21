@@ -6,7 +6,7 @@ from login import views as login_views
 from reserva import views as reserva_views
 
 urlpatterns = [
-    url(r'^$', TemplateView.as_view(template_name='home.html'), name='home'),
+    url(r'^$', reserva_views.ReservaQuery, name='home'),
     url(r'^admin/', admin.site.urls, name='admin'),
     url(r'^login/$', auth_views.login, {'template_name': 'login.html'}, name='login'),
     url(r'^logout/$', auth_views.logout, {'template_name': 'logged_out.html'}, name='logout'),
@@ -19,4 +19,7 @@ urlpatterns = [
     url(r'^profile/(?P<pk>\d+)$', login_views.ProfileDetailView.as_view(), name='profile_detail'),
     url(r'^libro/$', login_views.libro_search, name='libro_search'),
     url(r'^libro/(?P<pk>\d+)$', reserva_views.LibroDetailView.as_view(), name='libro_detail'),
+    url(r'^reserva/$', reserva_views.CreateReserva, name='create_reserva'),
+    url(r'^admin_view/$', reserva_views.AdminQuery, name='admin_view'),
+    url(r'^reserva/(?P<pk>\d+)/delete/$', reserva_views.DeleteReserva.as_view(), name='delete_reserva'),
 ]

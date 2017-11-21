@@ -3,7 +3,7 @@
 {% load widget_tweaks %}
 
 {% block content %}
-{% if user.is_staff %}
+{% if user.is_authenticated %}
   <form method="get">
     <div class="well">
       <h4 style="margin-top: 0">Filtro de Búsqueda</h4>

@@ -93,22 +93,17 @@ class Reserva(models.Model):
     libro = models.ForeignKey(
         Libro,
         verbose_name=_("Libro"))
-    fecha_encargo = models.DateField(
-        auto_now=True,)
+    fecha_encargo = models.DateField()
     fecha_devolucion = models.DateField(
         null=True,
         blank=True)
-
-    @property
-    def devuelto(self):
-        if self.fecha_devolucion:
-            return False
-        else:
-            return True
+    devuelto = models.NullBooleanField(
+        null=True,
+        default=False)
 
     def __str__(self):
         return self.usuario.profile.__str__() + '; ' + self.libro.__str__()
 
     class Meta:
         verbose_name = _("Reserva")
-        verbose_name_plural = _("Reervas")
+        verbose_name_plural = _("Reservas")
