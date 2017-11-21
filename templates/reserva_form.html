@@ -15,6 +15,7 @@
 {% endblock %}
 
 {% block content %}
+ {% if user.is_authenticated %}
   <h2>Nueva Reserva</h2>
   <!--
   <form method="post" class="viewform">
@@ -51,4 +52,6 @@
       <a href="{% url 'home' %}" class="btn btn-default">Cancelar</a>
     </div>
   </form>
+  {% else %}
+  <h2>No tiene los privilegios necesarios para visitar esta página</h2> {% endif %}
 {% endblock %}

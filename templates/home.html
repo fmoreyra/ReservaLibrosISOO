@@ -10,6 +10,7 @@
 
 {% else %}
 {% endif %}
+{% if user.is_authenticated %}
 <br>
 <h2>Mis Libros reservados</h2>
 <table class="table table-bordered">
@@ -42,4 +43,7 @@
         {% endfor %}
       </tbody>
     </table>
+    {% else %}
+    <h1>Hola! Para poder reservar tus libros, <a href="{% url 'signup' %}">creá</a> un usuario e <a href="{% url 'login' %}">iniciá sesión</a>.</h1>
+    {% endif %}
 {% endblock %}

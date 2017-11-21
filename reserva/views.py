@@ -41,8 +41,11 @@ def CreateReserva(request):
     return render(request, 'reserva_form.html', data)
 
 def ReservaQuery(request):
-    usuario = request.user.profile.user
-    reservaQuery = Reserva.objects.filter(usuario = usuario)
+
+    usuario = request.user
+    reservaQuery = Reserva.objects.all()
+    if usuario.is_authenticated():
+        reservaQuery = Reserva.objects.filter(usuario = usuario)
     data = {
         'reservaQuery': reservaQuery
     }
