@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% load widget_tweaks %}
+
+{% block content %}
+{% if user.is_authenticated %}
+  <form method="get">
+    <div class="well">
+      <h4 style="margin-top: 0">Filtro de Búsqueda</h4>
+      <div class="row">
+        <div class="form-group col-sm-4 col-md-3">
+          {{ filter.form.isbn.label_tag }}
+          {% render_field filter.form.isbn class="form-control" %}
+        </div>
+        <div class="form-group col-sm-4 col-md-3">
+          {{ filter.form.titulo.label_tag }}
+          {% render_field filter.form.titulo class="form-control" %}
+        </div>
+        <div class="form-group col-sm-4 col-md-3">
+          <label for="id_categoria__nombre">Categoría</label>
+          {% render_field filter.form.categoria__nombre class="form-control" %}
+        </div>
+        <div class="form-group col-sm-4 col-md-3">
+          {{ filter.form.disponibilidad.label_tag }}
+          {% render_field filter.form.disponibilidad class="form-control" %}
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary">
+        <span class="glyphicon glyphicon-search"></span> Search
+      </button>
+    </div>
+  </form>
+
+
+  <table class="table table-bordered">
+     <thead>
+       <tr>
+         <th>ISBN</th>
+         <th>Título</th>
+         <th>Edición</th>
+         <th>Autor</th>
+         <th>Categoría</th>
+         <th>Disponibilidad</th>
+       </tr>
+     </thead>
+     <tbody>
+       {% for libro in filter.qs %}
+         <tr>
+           <td>{{ libro.isbn }}</td>
+           <td><a href="/libro/{{ libro.id }}">{{ libro.titulo }}</a></td>
+           <td>{{ libro.edicion}}</td>
+           <td>{{ libro.autor.nombre_completo}}</td>
+           <td>{{ libro.categoria.nombre }}</td>
+           {% if libro.disponibilidad != True %}
+           <td style="color:white; background-color:#ff0000;"><strong>No</strong></td>
+           {% else %}
+           <td style="color:white;  background-color:#00b300;"><strong>Sí</strong></td>{% endif %}
+         </tr>
+
+       {% empty %}
+         <tr>
+           <td colspan="5">No hay datos</td>
+         </tr>
+       {% endfor %}
+     </tbody>
+   </table>
+   {% else %}
+   <h2>No tiene los privilegios necesarios para visitar esta página</h2> {% endif %}
+{% endblock %}

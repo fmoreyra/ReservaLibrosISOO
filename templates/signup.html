@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+
+{% block javascript %}
+  <script>
+
+  var validatedVariables = [true,true,true,true]
+    $("#id_username").change(function () {
+      var username = $(this).val();
+
+      $.ajax({
+        url: '/ajax/validate_username/',
+        data: {
+          'username': username
+        },
+        dataType: 'json',
+        success: function (data) {
+          if (data.is_taken) {
+            alert("El nombre de usuario ya está en uso");
+            validatedVariables[0]=false;
+          } else {
+            validatedVariables[0]=true;
+          }
+          validateVariables();
+        }
+      });
+    });
+
+
+    $("#id_legajo").change(function () {
+      var legajo = $(this).val();
+
+      $.ajax({
+        url: '/ajax/validate_legajo/',
+        data: {
+          'legajo': legajo
+        },
+        dataType: 'json',
+        success: function (data) {
+          if (data.is_taken) {
+            alert("El legajo ya está en uso");
+            validatedVariables[1]=false;
+          } else {
+            validatedVariables[1]=true;
+          }
+          validateVariables();
+        }
+      });
+
+    });
+
+    $("#id_documento").change(function () {
+      var documento = $(this).val();
+
+      $.ajax({
+        url: '/ajax/validate_documento/',
+        data: {
+          'documento': documento
+        },
+        dataType: 'json',
+        success: function (data) {
+          if (data.is_taken) {
+            alert("El documento ya está en uso");
+            validatedVariables[2]=false;
+          } else {
+            validatedVariables[2]=true;
+          }
+          validateVariables();
+        }
+
+      });
+
+    });
+
+    $("#id_email").change(function () {
+      var email = $(this).val();
+
+      $.ajax({
+        url: '/ajax/validate_email/',
+        data: {
+          'email': email
+        },
+        dataType: 'json',
+        success: function (data) {
+          if (data.is_taken) {
+            alert("El email ya está en uso");
+            validatedVariables[3]=false;
+          } else {
+            validatedVariables[3]=true;
+          }
+          validateVariables();
+        }
+      });
+
+    });
+  function validateVariables(){
+    var validated=true;
+    for (i = 0; i < validatedVariables.length; i++) {
+      if(!validatedVariables[i]){
+        validated=false;
+      }
+    }
+    if (!validated){
+      document.getElementById('save').disabled = 'true';
+    } else {
+      document.getElementById('save').removeAttribute("disabled");
+    }
+    return validated;
+  }
+  </script>
+{% endblock %}
+
+{% block content %}
+  <h2>Sign up</h2>
+  <!--
+  <form method="post" class="viewform">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button id="subscribirse" type="submit" class="btn btn-primary btn-lg">Sign up</button>
+  </form>
+-->
+{% load widget_tweaks %}
+<form method="post">
+    {% csrf_token %}
+
+    {% for hidden in form.hidden_fields %}
+      {{ hidden }}
+    {% endfor %}
+
+    {% for field in form.visible_fields %}
+      <div class="form-group">
+        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+        {{ field|add_class:'form-control' }}
+        {% for error in field.errors %}
+          <span class="help-block">{{ error }}</span>
+        {% endfor %}
+      </div>
+    {% endfor %}
+
+    <div class="form-group">
+      <button type="submit" class="btn btn-success" id="save">
+        <span class="glyphicon glyphicon-ok"></span> Save
+      </button>
+      <a href="{% url 'home' %}" class="btn btn-default">Cancel</a>
+    </div>
+  </form>
+{% endblock %}

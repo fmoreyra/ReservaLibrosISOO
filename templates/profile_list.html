@@ -1,0 +1,52 @@
+{% extends 'base.html' %} {% load widget_tweaks %} {% block content %} {% if user.is_staff %}
+<form method="get">
+  <div class="well">
+    <h4 style="margin-top: 0">Filtro de Búsqueda</h4>
+    <div class="row">
+      <div class="form-group col-sm-4 col-md-3">
+        <label for="id_user__username">Nombre de Usuario</label> {% render_field filter.form.user__username class="form-control" %}
+      </div>
+      <div class="form-group col-sm-4 col-md-3">
+        <label for="id_user__email">E-Mail</label> {% render_field filter.form.user__email class="form-control" %}
+      </div>
+      <div class="form-group col-sm-4 col-md-3">
+        {{ filter.form.legajo.label_tag }} {% render_field filter.form.legajo class="form-control" %}
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">
+        <span class="glyphicon glyphicon-search"></span> Search
+      </button>
+  </div>
+</form>
+
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Nombre de Usuario</th>
+      <th>Nombre</th>
+      <th>Apellido</th>
+      <th>Legajo</th>
+      <th>Carrera</th>
+      <th>E-Mail</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for profile in filter.qs %}
+    <tr>
+      <td><a href="/profile/{{ profile.id }}">{{ profile.user.username }}</a></td>
+      <td>{{ profile.nombre }}</td>
+      <td>{{ profile.apellido }}</td>
+      <td>{{ profile.legajo}}</td>
+      <td>{{ profile.carrera}}</td>
+      <td>{{ profile.user.email }}</td>
+    </tr>
+    {% empty %}
+    <tr>
+      <td colspan="5">No hay datos</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<h2>No tiene los privilegios necesarios para visitar esta página</h2> {% endif %} {% endblock %}
