@@ -11,7 +11,7 @@ DateInput = partial(forms.DateInput, {'class': 'datepicker'})
 class CreateReservaForm(forms.Form):
     libro = forms.ModelChoiceField(
         queryset=Libro.objects.filter(disponibilidad=True))
-    fecha_encargo = forms.DateField(
+    fecha_despacho = forms.DateField(
         widget=DateInput())
     fecha_devolucion = forms.DateField(
         widget=DateInput())
@@ -21,13 +21,13 @@ class CreateReservaForm(forms.Form):
        usuario = cleaned_data.get("usuario")
        libro = cleaned_data.get("libro")
        fecha_devolucion = cleaned_data.get('fecha_devolucion')
-       fecha_encargo = cleaned_data.get('fecha_encargo')
+       fecha_despacho = cleaned_data.get('fecha_despacho')
 
-       if fecha_devolucion < fecha_encargo:
+       if fecha_devolucion < fecha_despacho:
            raise ValidationError(_('La fecha de encargo debe ser anterior a la fecha de devolución'))
        if fecha_devolucion < datetime.date.today():
            raise ValidationError(_('La fecha de devolución es inválida, no puede ponerse una fecha del pasado'))
-       if fecha_encargo < datetime.date.today():
+       if fecha_despacho < datetime.date.today():
            raise ValidationError(_('La fecha de encargo es inválida, no puede ponerse una fecha del pasado'))
        if fecha_devolucion > datetime.date.today() + datetime.timedelta(weeks=4):
            raise ValidationError(_('No se pueden reservar libros por un tiempo mayor a un mes.'))

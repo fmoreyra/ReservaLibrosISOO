@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.translation import ugettext as _
 from django.contrib.auth.models import User
+from django.utils import timezone
 class Categoria(models.Model):
     nombre = models.CharField(
         max_length=255,
@@ -36,7 +37,9 @@ class Autor(models.Model):
         verbose_name=_('Nombre'))
     nacionalidad = models.ForeignKey(
         Nacionalidad,
-        verbose_name=_("Nacionalidad"))
+        verbose_name=_("Nacionalidad"),
+        on_delete=models.CASCADE
+        )
 
     @property
     def nombre_completo(self):
@@ -66,10 +69,12 @@ class Libro(models.Model):
         verbose_name=_("Edición"))
     autor = models.ForeignKey(
         Autor,
-        verbose_name=_("Autor"))
+        verbose_name=_("Autor"),
+        on_delete=models.CASCADE)
     categoria = models.ForeignKey(
         Categoria,
-        verbose_name=_("Categoría"))
+        verbose_name=_("Categoría"),
+        on_delete=models.CASCADE)
     resumen = models.TextField(
         max_length=2000,
         verbose_name=_("Resumen"),
@@ -89,15 +94,20 @@ class Libro(models.Model):
 class Reserva(models.Model):
     usuario = models.ForeignKey(
         User,
-        verbose_name=_("Usuario"))
+        verbose_name=_("Usuario"),
+        on_delete=models.CASCADE)
     libro = models.ForeignKey(
         Libro,
-        verbose_name=_("Libro"))
-    fecha_encargo = models.DateField()
+        verbose_name=_("Libro"),
+        on_delete=models.CASCADE)
+    fecha_despacho = models.DateField()
     fecha_devolucion = models.DateField(
-        null=True,
-        blank=True)
+        default= timezone.now
+    )
     devuelto = models.NullBooleanField(
+        null=True,
+        default=False)
+    entregado = models.NullBooleanField(
         null=True,
         default=False)
 

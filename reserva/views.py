@@ -23,13 +23,13 @@ def CreateReserva(request):
         if form.is_valid():
             libro = form.cleaned_data.get('libro')
             usuario = request.user.profile.user
-            fecha_encargo = form.cleaned_data.get('fecha_encargo')
+            fecha_despacho = form.cleaned_data.get('fecha_despacho')
             fecha_devolucion = form.cleaned_data.get('fecha_devolucion')
 
             reserva = Reserva(
                 libro=libro,
                 usuario=usuario,
-                fecha_encargo=fecha_encargo,
+                fecha_despacho=fecha_despacho,
                 fecha_devolucion=fecha_devolucion)
             reserva.save()
             return redirect('home')
@@ -52,7 +52,7 @@ def ReservaQuery(request):
     return render(request, 'home.html', data)
 
 def AdminQuery(request):
-    reservaEncargoToday = Reserva.objects.filter(fecha_encargo=datetime.date.today())
+    reservaEncargoToday = Reserva.objects.filter(fecha_despacho=datetime.date.today())
     reservaDevolucionFalseUnknown = Reserva.objects.exclude(devuelto=True)
     data = {
         'reservaEncargoToday': reservaEncargoToday,

@@ -12,6 +12,7 @@
          <th>Libro</th>
          <th>Fecha de Encargo</th>
          <th>Fecha de Devolucion</th>
+         <th>Entregado?</th>
          <th>Devuelto?</th>
        </tr>
      </thead>
@@ -20,15 +21,19 @@
          <tr>
            <td>{{ reserva.usuario.profile.nombre }} {{ reserva.usuario.profile.apellido }}</td>
            <td>{{ reserva.libro.titulo }}</td>
-           <td>{{ reserva.fecha_encargo}}</td>
+           <td>{{ reserva.fecha_despacho}}</td>
            <td>{{ reserva.fecha_devolucion}}</td>
+           {% if reserva.entregado != True %}
+           <td style="color:white; background-color:#ff0000;"><strong>No</strong></td>
+           {% else %}
+           <td style="color:white;  background-color:#00b300;"><strong>Sí</strong></td>{% endif %}
            {% if reserva.devuelto != True %}
            <td style="color:white; background-color:#ff0000;"><strong>No</strong></td>
            {% else %}
            <td style="color:white;  background-color:#00b300;"><strong>Sí</strong></td>{% endif %}
          </tr> {% empty %}
             <tr>
-              <td colspan="5">No hay libros para entregar hoy :)</td>
+              <td colspan="6">No hay libros para entregar hoy :)</td>
             </tr>
           {% endfor %}
         </tbody>
@@ -42,6 +47,7 @@
           <th>Libro</th>
           <th>Fecha de Encargo</th>
           <th>Fecha de Devolucion</th>
+          <th>Entregado?</th>
           <th>Devuelto?</th>
         </tr>
       </thead>
@@ -50,8 +56,12 @@
           <tr>
             <td>{{ reserva.usuario.profile.nombre }} {{ reserva.usuario.profile.apellido }}</td>
             <td>{{ reserva.libro.titulo }}</td>
-            <td>{{ reserva.fecha_encargo}}</td>
+            <td>{{ reserva.fecha_despacho}}</td>
             <td>{{ reserva.fecha_devolucion}}</td>
+            {% if reserva.entregado != True %}
+            <td style="color:white; background-color:#ff0000;"><strong>No</strong></td>
+            {% else %}
+            <td style="color:white;  background-color:#00b300;"><strong>Sí</strong></td>{% endif %}
             {% if reserva.devuelto != True %}
             <td style="color:white; background-color:#ff0000;"><strong>No</strong></td>
             {% else %}

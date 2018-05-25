@@ -29,8 +29,9 @@ class ReservaAdmin(admin.ModelAdmin):
     list_display = [
         'usuario',
         'libro',
-        'fecha_encargo',
+        'fecha_despacho',
         'fecha_devolucion',
+        'entregado',
         'devuelto']
     search_fields = [
         'usuario__profile__nombre',
@@ -45,8 +46,12 @@ class ReservaAdmin(admin.ModelAdmin):
         'libro__categoria__nombre',
         'libro__autor__nombre',
         'libro__disponibilidad',]
-    actions = ['marcar_como_devuelto']
+    actions = ['marcar_como_devuelto','marcar_como_entregado']
 
     def marcar_como_devuelto(self, request, queryset):
         for e in queryset.all(): e.libro.disponibilidad='True';e.libro.save()
         queryset.update(devuelto=True)
+
+    def marcar_como_entregado(self, request, queryset):
+        for e in queryset.all(): e.entregado='True';e.save()
+        queryset.update(entregado=True)
